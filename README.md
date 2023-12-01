@@ -17,34 +17,34 @@ function App() {
       prevCountry === 0 ? countries.length - 1 : prevCountry - 1
     );
   };
-  # Step 3: Define a function to navigate to the next country
+# Step 3: Define a function to navigate to the next country
   const nextCountry = () => {
     setSelectedCountry((prevCountry) =>
       prevCountry === countries.length - 1 ? 0 : prevCountry + 1
     );
   };
-  # Step 4: Define a function to remove a country by its ID
+# Step 4: Define a function to remove a country by its ID
   const removeCountry = (id) => {
-    // Use filter to create a new array without the specified country
+// Use filter to create a new array without the specified country
     const updatedCountries = countries.filter((country) => country.id !== id);
-    # Update the state with the new array of countries
+# Update the state with the new array of countries
     setCountries(updatedCountries);
-    # If the removed country is the selected country, clear the selection
+# If the removed country is the selected country, clear the selection
     if (selectedCountry >= updatedCountries.length) {
       setSelectedCountry(0);
     }
   };
-  # Step 5: Check if there are any countries left before trying to destructure
+# Step 5: Check if there are any countries left before trying to destructure
   const currentCountry =
     countries.length > 0 ? countries[selectedCountry] : null;
-  # Step 6: Render the UI
+# Step 6: Render the UI
   return (
     <div>
       # Display the total number of countries
       <div className='container'>
         <h1>List of {countries.length} must-visit countries in 2024</h1>
       </div>
-      #Render the navigation buttons, country details, and remove button
+#Render the navigation buttons, country details, and remove button
       {currentCountry && (
         <div className='container'>
           <button onClick={previousCountry}>Previous</button>
@@ -68,7 +68,7 @@ function App() {
       )}
       {currentCountry && (
         <div className='container'>
-          # Button to remove the current country
+# Button to remove the current country
           <button onClick={() => removeCountry(currentCountry.id)}>
             Visited!
           </button>
