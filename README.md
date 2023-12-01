@@ -1,7 +1,10 @@
 ### An alternative way to realise the project with more functionality, which I didn't come up with personally but had to use help. Saving it here for future reference and learning purposes.
 
 ```bash
-#This version of App.js code allows to display only one element from the array to begin with, with the rest of the elements being accessible via Previous and Next buttons. The user can also remove the country which has been ticked off the list and it will be removed from the new array, also changing the total number of countries listed in the <h1> heading.  
+#This version of App.js code allows to display only one element from the array to begin with,
+with the rest of the elements being accessible via Previous and Next buttons.
+The user can also remove the country which has been ticked off the list and it will be removed from the new array,
+also changing the total number of countries listed in the <h1> heading.  
 
 import { useState } from 'react';
 import { data } from './data';
