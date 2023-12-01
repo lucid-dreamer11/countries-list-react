@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+### An alternative way to realise the project with more functionality, which I didn't come up with personally but had to use help. Saving it here for future reference and learning purposes.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```bash
+#This version of App.js code allows to display only one element from the array to begin with, with the rest of the elements being accessible via Previous and Next buttons. The user can also remove the country which has been ticked off the list and it will be removed from the new array, also changing the total number of countries listed in the <h1> heading.  
 
-## Available Scripts
+import { useState } from 'react';
+import { data } from './data';
+import './App.css';
 
-In the project directory, you can run:
+function App() {
+# Step 1: Initialize state variables using the useState hook
+  const [countries, setCountries] = useState(data);
+  const [selectedCountry, setSelectedCountry] = useState(0);
+# Step 2: Define a function to navigate to the previous country
+  const previousCountry = () => {
+    setSelectedCountry((prevCountry) =>
+      prevCountry === 0 ? countries.length - 1 : prevCountry - 1
+    );
+  };
+  # Step 3: Define a function to navigate to the next country
+  const nextCountry = () => {
+    setSelectedCountry((prevCountry) =>
+      prevCountry === countries.length - 1 ? 0 : prevCountry + 1
+    );
+  };
+  # Step 4: Define a function to remove a country by its ID
+  const removeCountry = (id) => {
+    // Use filter to create a new array without the specified country
+    const updatedCountries = countries.filter((country) => country.id !== id);
+    # Update the state with the new array of countries
+    setCountries(updatedCountries);
+    # If the removed country is the selected country, clear the selection
+    if (selectedCountry >= updatedCountries.length) {
+      setSelectedCountry(0);
+    }
+  };
+  # Step 5: Check if there are any countries left before trying to destructure
+  const currentCountry =
+    countries.length > 0 ? countries[selectedCountry] : null;
+  # Step 6: Render the UI
+  return (
+    <div>
+      # Display the total number of countries
+      <div className='container'>
+        <h1>List of {countries.length} must-visit countries in 2024</h1>
+      </div>
+      #Render the navigation buttons, country details, and remove button
+      {currentCountry && (
+        <div className='container'>
+          <button onClick={previousCountry}>Previous</button>
+          <img src={currentCountry.image} width='400px' alt='country' />
+          <button onClick={nextCountry}>Next</button>
+        </div>
+      )}
+      {currentCountry && (
+        <div className='container'>
+          <h3>
+            {currentCountry.id} - {currentCountry.location}
+          </h3>
+        </div>
+      )}
+      {currentCountry && (
+        <div className='container'>
+          <p>
+            <b>Reasons to go:</b> {currentCountry.interest}
+          </p>
+        </div>
+      )}
+      {currentCountry && (
+        <div className='container'>
+          # Button to remove the current country
+          <button onClick={() => removeCountry(currentCountry.id)}>
+            Visited!
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+export default App;
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
